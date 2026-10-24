@@ -1,72 +1,74 @@
-# Play Together
+# Play With Me
 
-Play Together is a small web app for syncing music or YouTube playback between two people in the same room. One user creates or joins a room and shares the link. The app keeps room state synchronized so both sides stay in step while listening.
+Play With Me is a small web app for syncing music or YouTube playback between two people in the same room. One user creates or joins a room and shares the link. The app keeps room state synchronized so both sides stay in step while listening.
 
 ## Features
 
 - Shared room-based listening experience
 - Search and play free audio tracks from Audius and Jamendo
-- Optional YouTube video playback
-- Real-time room sync with shared playback state
+- Synchronized YouTube playback
+- In-room chat, quick emoji reactions, and edit/delete controls for your own messages
+- Real-time room and playback sync backed by Redis
 - Invite link generation for quick sharing
-- Lightweight static frontend + serverless API setup
+- Responsive, animated interface for desktop and mobile
+- Lightweight frontend with serverless API routes
 
 ## Project structure
 
 - `public/index.html` – frontend UI and client-side sync logic
 - `api/search.js` – searches tracks from free music APIs
 - `api/stream.js` – resolves a track ID to a streaming URL
-- `api/room.js` – stores and syncs room state in Redis
-- `api/_jamendo.js` – helper for Jamendo/Audius API requests
+- `api/room.js` – stores playback state, room presence, chat, and reactions in Redis
+- `api/_audius.js` – Audius API helper
+- `api/_jamendo.js` – Jamendo API helper
 
 ## Tech stack
 
 - HTML/CSS/JavaScript frontend
 - Serverless API routes in the `api/` folder
-- Redis-backed room state via Upstash-compatible REST API
+- Redis REST API for room state and chat (Upstash-compatible)
+- Audius and Jamendo for audio search and streaming
+- YouTube IFrame Player API for video playback
 - No build step required for the frontend
 
 ## How it works
 
 1. A user opens the app, picks a room name, and joins.
 2. The browser creates a shareable invite link.
-3. The app periodically polls the room state from the backend.
-4. Playback metadata and position are stored per room.
-5. When another user joins, the app applies the room state to keep both clients aligned.
+3. The app periodically polls the room API for playback state, participants, and chat.
+4. Playback updates and up to 50 chat messages per room are stored in Redis; chat expires after 24 hours.
+5. Users can edit or delete their own text messages. Changes appear for other room members on the next poll.
 
 ## Required environment variables
 
-The app expects the following environment variables to be configured in your hosting environment.
+Configure these in `.env.local` for local development and in your hosting provider for deployment:
 
-- `REST_API_URL` – base URL for the Redis REST API service
-- `REST_API_TOKEN` – access token for that Redis REST API
+- `UPSTASH_REDIS_REST_URL` – Redis REST API URL; `REST_API_URL` and `REST_URL` are also accepted
+- `UPSTASH_REDIS_REST_TOKEN` – Redis REST API token; `REST_API_TOKEN` and `REST_TOKEN` are also accepted
 - `AUDIUS_BEARER_TOKEN` – optional but recommended for Audius requests
 - `JAMENDO_CLIENT_ID` – required to enable Jamendo search and playback
 
-The backend checks for these values in `api/room.js`, `api/_audius.js`, and `api/_jamendo.js`.
+Keep `.env.local` and all tokens private; do not commit them. `.env.local` is excluded by `.gitignore`.
 
-## Local usage
+## Run locally
 
-This project requires a host that supports serverless API functions; serving only the `public/` folder (for example, with VS Code Live Server or GitHub Pages) will make `/api/search` and `/api/stream` return 404. Vercel automatically detects the `api/` functions and serves `public/index.html` at the site root, so no custom routing configuration is needed.
+The app needs a serverless-functions runtime. VS Code Go Live, opening `public/index.html` directly, and static-only hosts such as GitHub Pages do not run the API routes, so search, chat, and room sync will fail there.
 
-### Option 1: Vercel
+1. Install Node.js.
+2. Add your development environment variables to `.env.local` in the project root.
+3. From the project root, start Vercel's local runtime:
 
-1. Push the project to a Git repository.
-2. Import it into Vercel.
-3. Add the required environment variables.
-4. Deploy.
+   ```bash
+   npx vercel dev
+   ```
 
-### Option 2: Local dev environment
+4. Open the local URL printed in the terminal. Keep that terminal running while using the app.
 
-Use the Vercel development runtime to run the frontend and API functions together. Do not open `public/index.html` directly or use a static-only preview server.
+## Deploy to Vercel
 
-From the project root:
-
-```bash
-npx vercel dev
-```
-
-Set the environment variables in your Vercel project and pull them for local development with `npx vercel env pull .env.local`, or define them in the shell before starting the development server.
+1. Push the project to a Git repository and import it into Vercel.
+2. Add the required environment variables under **Project Settings → Environment Variables**. Add the Redis URL and token for room syncing, and `JAMENDO_CLIENT_ID` for Jamendo tracks.
+3. Deploy or redeploy after setting the variables.
 
 ## API behavior
 
@@ -77,16 +79,17 @@ Returns a list of matching tracks.
 Converts a track ID into a playable audio URL.
 
 ### `GET /api/room?room=...&id=...`
-Returns peer count and synchronized room state.
+Returns participant count, synchronized playback state, and recent room chat.
 
 ### `POST /api/room`
-Stores current playback state for the room.
+Accepts playback updates and chat messages/reactions. Chat messages can also be edited or deleted by their original sender.
 
 ## Notes
 
 - Room names are normalized to a simple lowercase slug to keep URLs predictable.
-- Playback state is intentionally kept lightweight so multiple users can stay roughly synchronized.
-- Search results depend on the availability of Audius and Jamendo APIs.
+- Playback sync is lightweight and updates periodically, so clients stay roughly synchronized.
+- Chat is shared with everyone in the same room; the API only allows a sender to edit or delete their own text messages.
+- Search results and playback availability depend on the Audius and Jamendo services.
 
 ## License
 

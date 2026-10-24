@@ -1,69 +1,176 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Play Together</title>
+<title>Play With Me</title>
+<meta name="theme-color" content="#101026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fafaf8;--fg:#1a1a1a;--mut:#8a8a85;--line:#e4e4df}
-@media (prefers-color-scheme:dark){:root{--bg:#121212;--fg:#ececea;--mut:#8d8d88;--line:#2a2a28}}
+:root{color-scheme:dark;--bg:#0c0b1a;--panel:rgba(25,24,52,.76);--panel-strong:#211f43;--fg:#faf8ff;--mut:#aaa8c7;--line:rgba(221,215,255,.14);--pink:#ff79c6;--violet:#aa8cff;--cyan:#77e6e2;--shadow:0 24px 80px rgba(3,2,19,.42)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:flex;justify-content:center}
-main{width:100%;max-width:460px;padding:48px 24px;display:flex;flex-direction:column;gap:22px}
-h1{font-size:15px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin:0}
-.row{display:flex;gap:8px;align-items:center}
-input[type=text]{flex:1;min-width:0;background:none;border:0;border-bottom:1px solid var(--line);color:var(--fg);font:inherit;padding:10px 0;outline:none}
-input[type=text]:focus{border-color:var(--fg)}
-button{background:none;border:1px solid var(--line);color:var(--fg);font:inherit;padding:8px 16px;border-radius:999px;cursor:pointer}
-button:hover{border-color:var(--fg)}
-button.p{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 12% 8%,rgba(131,82,218,.2),transparent 34%),radial-gradient(ellipse at 88% 24%,rgba(45,193,202,.12),transparent 30%),var(--bg);color:var(--fg);font:15px/1.6 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.3;background-image:radial-gradient(1px 1px at 8% 22%,#fff 98%,transparent),radial-gradient(1px 1px at 77% 14%,#c5b4ff 98%,transparent),radial-gradient(1px 1px at 91% 67%,#fff 98%,transparent),radial-gradient(1px 1px at 31% 79%,#b6f5f0 98%,transparent),radial-gradient(1.5px 1.5px at 62% 42%,#fff 98%,transparent);background-size:320px 280px}
+button,input{font:inherit}
+button{color:inherit}
+main{width:min(100% - 40px,1080px);margin:0 auto;padding:26px 0 64px}
+.site-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:64px}
+.brand{display:flex;align-items:center;gap:12px;font:600 14px "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.brand-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.2);border-radius:13px;background:linear-gradient(145deg,rgba(255,121,198,.28),rgba(170,140,255,.24));color:#ffd3ef;font-size:23px;box-shadow:0 0 28px rgba(170,140,255,.18)}
+.header-caption{color:var(--mut);font-size:13px}
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 300px;align-items:center;gap:40px;margin-bottom:36px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#d5caff;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.eyebrow:before{content:"";width:20px;height:1px;background:var(--pink)}
+h1,h2,h3,p{margin-top:0}
+.hero h1{max-width:650px;margin:16px 0;font:600 clamp(38px,6.8vw,76px)/1.02 "Space Grotesk",sans-serif;letter-spacing:-.065em}
+.hero h1 span{background:linear-gradient(100deg,#ff9bd5 8%,#c6a8ff 55%,#82e9e4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy{max-width:520px;margin:0;color:var(--mut);font-size:16px}
+.orbital-art{position:relative;display:grid;place-items:center;min-height:230px;isolation:isolate}
+.orbital-art:before,.orbital-art:after{content:"";position:absolute;border:1px solid rgba(210,191,255,.2);border-radius:50%;transform:rotate(-28deg);animation:orbit 18s linear infinite}
+.orbital-art:before{width:245px;height:112px}
+.orbital-art:after{width:200px;height:200px;transform:rotate(45deg);animation-direction:reverse}
+.orb{display:grid;place-items:center;width:126px;height:126px;border-radius:42% 58% 55% 45%;background:radial-gradient(circle at 34% 27%,#ffd0e9,transparent 22%),linear-gradient(145deg,#ff8bc8,#a38bff 62%,#5f61d7);box-shadow:0 0 65px rgba(184,119,255,.45),inset -12px -15px 35px rgba(48,30,117,.35);animation:float 5s ease-in-out infinite;font-size:40px}
+.satellite{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--cyan);box-shadow:0 0 20px var(--cyan);animation:float 4s ease-in-out infinite}
+.satellite.one{top:35px;right:33px}.satellite.two{bottom:37px;left:27px;width:8px;height:8px;background:var(--pink);box-shadow:0 0 18px var(--pink);animation-delay:-1.7s}
+.panel{border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(35,32,69,.83),rgba(19,19,43,.78));box-shadow:var(--shadow);backdrop-filter:blur(18px)}
+.join-card{position:relative;max-width:680px;margin:0 auto;padding:30px}
+.join-card h2{margin:10px 0 4px;font:600 27px "Space Grotesk",sans-serif;letter-spacing:-.03em}
+.join-card p{margin-bottom:22px;color:var(--mut)}
+.row{display:flex;gap:10px;align-items:center}
+input[type=text]{width:100%;min-width:0;border:1px solid var(--line);border-radius:14px;background:rgba(10,9,28,.55);color:var(--fg);padding:13px 15px;outline:none;transition:border-color .2s,box-shadow .2s}
+input[type=text]::placeholder{color:#777594}
+input[type=text]:focus{border-color:rgba(170,140,255,.8);box-shadow:0 0 0 4px rgba(170,140,255,.12)}
+button{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.05);padding:11px 17px;cursor:pointer;transition:transform .2s,border-color .2s,filter .2s,background .2s}
+button:hover{transform:translateY(-2px);border-color:rgba(206,188,255,.55);background:rgba(255,255,255,.09)}
+button:focus-visible{outline:3px solid rgba(119,230,226,.7);outline-offset:3px}
+button.p{flex:none;border:0;background:linear-gradient(105deg,#ff79c6,#ad88ff 70%,#7c9bff);color:#171126;font-weight:700;box-shadow:0 8px 24px rgba(170,105,228,.25)}
+button.p:hover{filter:brightness(1.1)}
 .mut{color:var(--mut);font-size:13px}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--line);margin-right:8px}
-.dot.on{background:#3bb273}
-.tabs{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;width:fit-content}
-.tabs button{border:0;padding:6px 20px}
-.tabs button.on{background:var(--fg);color:var(--bg)}
-#stage{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--line);position:relative}
-#stage>div,#stage iframe{position:absolute;inset:0;width:100%;height:100%}
-#ph{display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:13px;padding:24px;text-align:center}
-#ytw{z-index:1}
-#res{list-style:none;margin:0;padding:0;max-height:260px;overflow:auto}
-#res li{padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column}
+.app-shell{display:flex;flex-direction:column;gap:22px}
+.app-panel{display:flex;flex-direction:column;gap:18px;padding:clamp(18px,4vw,32px)}
+.app-topline{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.connection{display:inline-flex;align-items:center;padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff8d9c;margin-right:9px;box-shadow:0 0 12px currentColor}
+.dot.on{background:#6be2b1}
+.tabs{display:flex;gap:5px;width:fit-content;padding:5px;border:1px solid var(--line);border-radius:16px;background:rgba(8,8,25,.48)}
+.tabs button{min-width:100px;border:0;padding:8px 18px;background:transparent;color:var(--mut)}
+.tabs button.on{background:linear-gradient(110deg,rgba(255,121,198,.22),rgba(170,140,255,.27));color:var(--fg);box-shadow:inset 0 0 0 1px rgba(221,215,255,.12)}
+#note{min-height:0;margin:0;color:#ffc5dd}
+#note:empty{display:none}
+#audioView,#videoView{gap:18px}
+.search-row{padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(8,8,25,.38)}
+.search-row input[type=text]{border:0;background:transparent;box-shadow:none}
+#res{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;list-style:none;margin:0;padding:0;max-height:360px;overflow:auto}
+#res li{min-width:0;padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);cursor:pointer;display:flex;flex-direction:column;gap:3px;transition:transform .2s,border-color .2s,background .2s;animation:rise .35s both}
+#res li:hover{transform:translateY(-3px);border-color:rgba(170,140,255,.48);background:rgba(170,140,255,.09)}
+#res li b{font-weight:600}
 #res li span{color:var(--mut);font-size:13px}
-#res li:hover b{text-decoration:underline}
-#np{display:flex;flex-direction:column;gap:14px}
-#np .top{display:flex;gap:14px;align-items:center}
-#cover{width:72px;height:72px;border-radius:10px;object-fit:cover;background:var(--line)}
-#ttl{font-weight:500}
-input[type=range]{width:100%;accent-color:var(--fg)}
+.music-note{margin:0}
+#np{display:flex;flex-direction:column;gap:16px;padding:20px;border:1px solid rgba(194,171,255,.2);border-radius:22px;background:linear-gradient(125deg,rgba(255,121,198,.09),rgba(124,155,255,.1),rgba(119,230,226,.06))}
+#np .top{display:flex;gap:15px;align-items:center}
+#cover{width:76px;height:76px;border:1px solid var(--line);border-radius:17px;object-fit:cover;background:var(--panel-strong);box-shadow:0 8px 25px rgba(0,0,0,.25)}
+#ttl{font:600 18px "Space Grotesk",sans-serif}
+#bar{width:100%;accent-color:#d9a3ff}
+input[type=range]{cursor:pointer}
+#stage{aspect-ratio:16/9;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(170,140,255,.2),transparent 35%),rgba(8,8,25,.7);position:relative}
+#stage>div,#stage iframe{position:absolute;inset:0;width:100%;height:100%}
+#ph{display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:14px;padding:24px;text-align:center}
+#ytw{z-index:1}
+.chat-panel{display:flex;flex-direction:column;gap:14px;padding:18px;border:1px solid var(--line);border-radius:20px;background:rgba(8,8,25,.38)}
+.chat-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.chat-heading h3{margin:0;font:600 18px "Space Grotesk",sans-serif}
+.chat-presence{display:flex;align-items:center;gap:7px;color:var(--mut);font-size:12px}
+.chat-presence .dot{width:7px;height:7px;margin:0;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.chat-messages{display:flex;flex-direction:column;gap:9px;min-height:90px;max-height:240px;overflow-y:auto;padding:4px 3px;scrollbar-color:rgba(170,140,255,.4) transparent}
+.chat-empty{align-self:center;margin:auto;color:var(--mut);font-size:13px;text-align:center}
+.chat-message{align-self:flex-start;max-width:min(86%,480px);padding:9px 12px;border:1px solid var(--line);border-radius:15px 15px 15px 4px;background:rgba(255,255,255,.055);animation:rise .25s both;overflow-wrap:anywhere}
+.chat-message.mine{align-self:flex-end;border-color:rgba(170,140,255,.25);border-radius:15px 15px 4px 15px;background:linear-gradient(120deg,rgba(255,121,198,.13),rgba(170,140,255,.16))}
+.chat-message-content{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.chat-actions{display:flex;gap:4px;flex:none}
+.chat-actions button{padding:2px 6px;border-color:transparent;background:transparent;color:var(--mut);font-size:11px}
+.chat-actions button:hover{color:var(--fg)}
+.chat-author{display:block;margin-bottom:2px;color:#d5caff;font-size:11px;font-weight:700}
+.chat-message p{margin:0;font-size:14px;line-height:1.45}
+.chat-message.reaction{padding:4px 10px;border:0;background:transparent;font-size:30px}
+.reaction-row{display:flex;flex-wrap:wrap;gap:7px}
+.reaction-row button{display:grid;place-items:center;width:39px;height:38px;padding:0;border-radius:13px;font-size:19px}
+.chat-compose{display:flex;gap:9px}
+.chat-compose input[type=text]{padding:11px 13px}
+.chat-compose button{flex:none}
+.chat-compose button.p{width:45px;padding:0;font-size:19px}
+.invite-row{justify-content:center;padding-top:5px}
+#copy{border-radius:999px}
 .hide{display:none!important}
 .col{display:flex;flex-direction:column;gap:18px}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+@keyframes orbit{to{transform:rotate(332deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){main{width:min(100% - 28px,620px);padding-top:18px}.site-header{margin-bottom:38px}.header-caption{font-size:11px}.hero{grid-template-columns:1fr;gap:0;margin-bottom:26px;overflow:hidden}.hero h1{font-size:clamp(43px,13vw,67px)}.orbital-art{position:absolute;right:-54px;top:-55px;min-height:190px;transform:scale(.62);opacity:.58;pointer-events:none}.hero-copy{max-width:410px}.join-card{padding:23px;border-radius:23px}.app-shell{gap:17px}}
+@media(max-width:520px){.chat-message-content{flex-direction:column;gap:5px}.chat-actions{align-self:flex-end}}
+@media(max-width:420px){.header-caption{max-width:130px;text-align:right}.join-card h2{font-size:24px}.row{gap:8px}.row button{padding:11px 13px}.tabs button{min-width:88px;padding:8px 12px}#res{grid-template-columns:1fr}.search-row{padding:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style></head><body><main>
-<h1>Play Together</h1>
+<header class="site-header">
+  <div class="brand"><span class="brand-mark" aria-hidden="true">♫</span><span>Play With Me</span></div>
+  <div class="header-caption">A little universe for your favorite songs</div>
+</header>
 
-<section id="join"><p class="mut">Pick a room name and share the link with your friend.</p>
-<div class="row"><input type="text" id="room" placeholder="room-name" maxlength="24" autocapitalize="off"><button class="p" id="go">Join</button></div></section>
+<section class="hero">
+  <div>
+    <div class="eyebrow">Good music, better together</div>
+    <h1>Press play.<br><span>Find your people.</span></h1>
+    <p class="hero-copy">Your own little listening room, wherever your friends are. Drop in, share a song, and drift along together.</p>
+  </div>
+  <div class="orbital-art" aria-hidden="true"><span class="satellite one"></span><span class="satellite two"></span><div class="orb">♫</div></div>
+</section>
 
-<section id="app" class="col hide">
-  <div class="mut"><span class="dot" id="dot"></span><span id="status">Waiting for friend…</span></div>
+<section id="join" class="join-card panel">
+  <div class="eyebrow">Your shared space</div>
+  <h2>Make a room together</h2>
+  <p>Choose a room name, then send the invite to your favorite person.</p>
+  <div class="row"><input type="text" id="room" placeholder="try: moonlight-mix" maxlength="24" autocapitalize="off"><button class="p" id="go">Join room <span aria-hidden="true">↗</span></button></div>
+</section>
+
+<section id="app" class="app-shell hide">
+  <div class="app-topline"><div class="eyebrow">Your listening room</div><div class="connection mut"><span class="dot" id="dot"></span><span id="status">Waiting for friend…</span></div></div>
+  <div class="panel app-panel">
   <div class="tabs"><button id="tabAu" class="on">Audio</button><button id="tabYt">Video</button></div>
   <p class="mut" id="note" style="margin:0"></p>
 
   <div id="audioView" class="col">
-    <div class="row"><input type="text" id="q" placeholder="Search songs"><button class="p" id="sb">Search</button></div>
+    <div class="row search-row"><input type="text" id="q" placeholder="Search a song, artist, or mood"><button class="p" id="sb">Search <span aria-hidden="true">⌕</span></button></div>
     <ul id="res"></ul>
     <div id="np" class="hide">
       <div class="top"><img id="cover" class="hide" alt=""><div><div id="ttl"></div><div class="mut" id="art"></div></div></div>
       <input type="range" id="bar" min="0" max="0" step="1" value="0">
       <div class="row" style="justify-content:space-between"><span class="mut" id="t">0:00 / 0:00</span><button id="apb">Pause</button></div>
     </div>
-    <p class="mut" style="margin:0">Free full-length songs via Audius and Jamendo. Artists are credited above.</p>
+    <p class="mut music-note">Free full-length songs via Audius and Jamendo. Artists are credited above.</p>
   </div>
 
   <div id="videoView" class="col hide">
     <div class="row"><input type="text" id="url" placeholder="Paste a YouTube link"><button class="p" id="load">Play</button></div>
     <div id="stage"><div id="ph">Nothing playing</div><div id="ytw"></div></div>
+    <section class="chat-panel" aria-label="Room chat">
+      <div class="chat-heading"><h3>Chat & reactions</h3><span class="chat-presence"><span class="dot"></span>In this room</span></div>
+      <div id="chatMessages" class="chat-messages" role="log" aria-live="polite"><div id="chatEmpty" class="chat-empty">Say hi or send a little reaction while you watch ✨</div></div>
+      <div class="reaction-row" aria-label="Quick reactions">
+        <button type="button" data-reaction="❤️" aria-label="Send heart reaction">❤️</button>
+        <button type="button" data-reaction="😂" aria-label="Send laughing reaction">😂</button>
+        <button type="button" data-reaction="😍" aria-label="Send love reaction">😍</button>
+        <button type="button" data-reaction="👏" aria-label="Send applause reaction">👏</button>
+        <button type="button" data-reaction="🔥" aria-label="Send fire reaction">🔥</button>
+        <button type="button" data-reaction="😮" aria-label="Send surprised reaction">😮</button>
+      </div>
+      <form id="chatForm" class="chat-compose">
+        <input type="text" id="chatInput" maxlength="280" placeholder="Send a message…" aria-label="Chat message" autocomplete="off">
+        <button class="p" type="submit" aria-label="Send message">↑</button>
+      </form>
+    </section>
   </div>
 
-  <div class="row" style="justify-content:center"><button id="copy">Copy invite link</button></div>
+  <div class="row invite-row"><button id="copy">Copy invite link <span aria-hidden="true">↗</span></button></div>
+  </div>
 </section>
 <audio id="au" preload="auto"></audio>
 
@@ -74,8 +181,86 @@ const say=t=>{$('note').textContent=t;$('ph').textContent=t||'Nothing playing';i
 const fmt=s=>isFinite(s)?Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0'):'0:00';
 let mode='au',type=null,vid=null,meta=null,playing=false,mute=0,lastV=0,okNet=true;
 let player=null,ytReady=false,pending=null,expect=0,expectTs=0;
+const chatNodes=new Map();
 const au=$('au'),lock=ms=>{mute=Date.now()+(ms||1800)},muted=()=>Date.now()<mute;
 const post=(pl,pos)=>fetch('/api/room',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({room:RM(),id:me,type,vid,meta,playing:pl,pos})}).catch(()=>{});
+function renderChat(messages,snapshot=false){
+  const box=$('chatMessages');
+  const wasAtBottom=box.scrollHeight-box.scrollTop-box.clientHeight<48;
+  let added=false;
+  if(snapshot){
+    const ids=new Set(messages.map(message=>message&&message.id).filter(Boolean));
+    for(const [id,node] of chatNodes){
+      if(!ids.has(id)){node.remove();chatNodes.delete(id)}
+    }
+  }
+  messages.forEach(message=>{
+    if(!message||!message.id)return;
+    let item=chatNodes.get(message.id);
+    if(!item){
+      item=document.createElement('div');
+      item.className='chat-message'+(message.from===me?' mine':'')+(message.kind==='reaction'?' reaction':'');
+      if(message.kind==='reaction'){
+        item.textContent=message.text;item.setAttribute('aria-label','Room reaction '+message.text);
+      }else{
+        const author=document.createElement('span'),content=document.createElement('div'),text=document.createElement('p');
+        author.className='chat-author';author.textContent=message.from===me?'You':'Friend';
+        content.className='chat-message-content';text.className='chat-text';content.append(text);
+        item.append(author,content);
+      }
+      chatNodes.set(message.id,item);added=true;
+    }
+    if(message.kind!=='reaction'){
+      item.querySelector('.chat-text').textContent=message.text+(message.edited?' (edited)':'');
+      const content=item.querySelector('.chat-message-content');
+      if(message.from===me&&!content.querySelector('.chat-actions')){
+        const actions=document.createElement('div'),edit=document.createElement('button'),remove=document.createElement('button');
+        actions.className='chat-actions';edit.type=remove.type='button';edit.textContent='Edit';remove.textContent='Delete';
+        edit.setAttribute('aria-label','Edit your message');remove.setAttribute('aria-label','Delete your message');
+        edit.onclick=()=>editChatMessage(item.message);remove.onclick=()=>deleteChatMessage(message.id);
+        actions.append(edit,remove);content.append(actions);
+      }
+      item.message=message;
+    }
+    box.append(item);
+  });
+  $('chatEmpty').classList.toggle('hide',chatNodes.size>0);
+  while(chatNodes.size>50){
+    const [id,node]=chatNodes.entries().next().value;
+    chatNodes.delete(id);node.remove();
+  }
+  if(added&&wasAtBottom)box.scrollTop=box.scrollHeight;
+}
+async function sendChat(text,kind){
+  const message=String(text||'').trim();if(!message||!RM())return;
+  try{
+    const r=await fetch('/api/room',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({room:RM(),id:me,kind,text:message})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(d.error||('HTTP '+r.status));
+    if(d.message)renderChat([d.message]);
+  }catch(e){say('Chat could not send: '+e.message)}
+}
+async function editChatMessage(message){
+  const text=prompt('Edit your message:',message.text);
+  if(text===null||!text.trim())return;
+  try{
+    const r=await fetch('/api/room',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({room:RM(),id:me,kind:'edit',messageId:message.id,text})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(d.error||('HTTP '+r.status));
+    if(d.message)renderChat([d.message]);
+  }catch(e){say('Message could not be edited: '+e.message)}
+}
+async function deleteChatMessage(messageId){
+  try{
+    const r=await fetch('/api/room',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({room:RM(),id:me,kind:'delete',messageId})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(d.error||('HTTP '+r.status));
+    const node=chatNodes.get(d.deletedId);if(node)node.remove();chatNodes.delete(d.deletedId);
+    $('chatEmpty').classList.toggle('hide',chatNodes.size>0);
+  }catch(e){say('Message could not be deleted: '+e.message)}
+}
+if($('chatForm'))$('chatForm').onsubmit=e=>{e.preventDefault();const input=$('chatInput');const text=input.value.trim();if(text){input.value='';sendChat(text,'chat')}};
+document.querySelectorAll('[data-reaction]').forEach(button=>button.onclick=()=>sendChat(button.dataset.reaction,'reaction'));
 
 function setMode(m){
   mode=m;
@@ -172,6 +357,7 @@ async function poll(n){
     if(!r.ok)throw new Error(d.error||('HTTP '+r.status));
     if(!okNet){okNet=true;if($('note').textContent.startsWith('Sync'))say('')}
     $('dot').className='dot'+(d.peers>1?' on':'');$('status').textContent=d.peers>1?'Friend connected':'Waiting for friend…';
+    renderChat(d.chat||[],true);
     const s=d.state;if(s&&s.v!==lastV){lastV=s.v;if(s.from!==me)apply(s)}
   }catch(e){okNet=false;$('status').textContent='Not connected';say('Sync problem: '+e.message)}
   setTimeout(()=>poll(n),1000);
