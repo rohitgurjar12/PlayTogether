@@ -36,7 +36,8 @@ h1,h2,h3,p{margin-top:0}
 .join-card{position:relative;max-width:680px;margin:0 auto;padding:30px}
 .join-card h2{margin:10px 0 4px;font:600 27px "Space Grotesk",sans-serif;letter-spacing:-.03em}
 .join-card p{margin-bottom:22px;color:var(--mut)}
-.row{display:flex;gap:10px;align-items:center}
+.row{display:flex;gap:10px;align-items:center;min-width:0}
+.row input[type=text]{flex:1;width:0;min-width:0}
 input[type=text]{width:100%;min-width:0;border:1px solid var(--line);border-radius:14px;background:rgba(10,9,28,.55);color:var(--fg);padding:13px 15px;outline:none;transition:border-color .2s,box-shadow .2s}
 input[type=text]::placeholder{color:#777594}
 input[type=text]:focus{border-color:rgba(170,140,255,.8);box-shadow:0 0 0 4px rgba(170,140,255,.12)}
@@ -48,6 +49,7 @@ button.p:hover{filter:brightness(1.1)}
 .mut{color:var(--mut);font-size:13px}
 .app-shell{display:flex;flex-direction:column;gap:22px}
 .app-panel{display:flex;flex-direction:column;gap:18px;padding:clamp(18px,4vw,32px)}
+.app-panel,.app-panel>*{min-width:0;max-width:100%}
 .app-topline{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .connection{display:inline-flex;align-items:center;padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff8d9c;margin-right:9px;box-shadow:0 0 12px currentColor}
@@ -57,22 +59,23 @@ button.p:hover{filter:brightness(1.1)}
 .tabs button.on{background:linear-gradient(110deg,rgba(255,121,198,.22),rgba(170,140,255,.27));color:var(--fg);box-shadow:inset 0 0 0 1px rgba(221,215,255,.12)}
 #note{min-height:0;margin:0;color:#ffc5dd}
 #note:empty{display:none}
-#audioView,#videoView{gap:18px}
+#audioView,#videoView{width:100%;min-width:0;gap:18px}
 .search-row{padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(8,8,25,.38)}
 .search-row input[type=text]{border:0;background:transparent;box-shadow:none}
 #res{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;list-style:none;margin:0;padding:0;max-height:360px;overflow:auto}
 #res li{min-width:0;padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);cursor:pointer;display:flex;flex-direction:column;gap:3px;transition:transform .2s,border-color .2s,background .2s;animation:rise .35s both}
 #res li:hover{transform:translateY(-3px);border-color:rgba(170,140,255,.48);background:rgba(170,140,255,.09)}
-#res li b{font-weight:600}
-#res li span{color:var(--mut);font-size:13px}
+#res li b{font-weight:600;overflow-wrap:anywhere;word-break:break-word}
+#res li span{color:var(--mut);font-size:13px;overflow-wrap:anywhere;word-break:break-word}
 .music-note{margin:0}
 #np{display:flex;flex-direction:column;gap:16px;padding:20px;border:1px solid rgba(194,171,255,.2);border-radius:22px;background:linear-gradient(125deg,rgba(255,121,198,.09),rgba(124,155,255,.1),rgba(119,230,226,.06))}
-#np .top{display:flex;gap:15px;align-items:center}
+#np .top{display:flex;gap:15px;align-items:center;min-width:0}
+#np .top>div{flex:1;min-width:0}
 #cover{width:76px;height:76px;border:1px solid var(--line);border-radius:17px;object-fit:cover;background:var(--panel-strong);box-shadow:0 8px 25px rgba(0,0,0,.25)}
-#ttl{font:600 18px "Space Grotesk",sans-serif}
+#ttl{min-width:0;font:600 18px "Space Grotesk",sans-serif;overflow-wrap:anywhere;word-break:break-word}
 #bar{width:100%;accent-color:#d9a3ff}
 input[type=range]{cursor:pointer}
-#stage{aspect-ratio:16/9;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(170,140,255,.2),transparent 35%),rgba(8,8,25,.7);position:relative}
+#stage{width:100%;min-width:0;aspect-ratio:16/9;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(170,140,255,.2),transparent 35%),rgba(8,8,25,.7);position:relative}
 #stage>div,#stage iframe{position:absolute;inset:0;width:100%;height:100%}
 #ph{display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:14px;padding:24px;text-align:center}
 #ytw{z-index:1}
