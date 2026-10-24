@@ -2,6 +2,8 @@
 
 Play Together is a small web app for syncing music or YouTube playback between two people in the same room. One user creates or joins a room and shares the link. The app keeps room state synchronized so both sides stay in step while listening.
 
+### Live Link - [Play Together](https://playtogetherr.vercel.app)
+
 ## Features
 
 - Shared room-based listening experience
