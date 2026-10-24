@@ -68,11 +68,12 @@ button.p:hover{filter:brightness(1.1)}
 #res li b{font-weight:600;overflow-wrap:anywhere;word-break:break-word}
 #res li span{color:var(--mut);font-size:13px;overflow-wrap:anywhere;word-break:break-word}
 .music-note{margin:0}
-#np{display:flex;flex-direction:column;gap:16px;padding:20px;border:1px solid rgba(194,171,255,.2);border-radius:22px;background:linear-gradient(125deg,rgba(255,121,198,.09),rgba(124,155,255,.1),rgba(119,230,226,.06))}
-#np .top{display:flex;gap:15px;align-items:center;min-width:0}
-#np .top>div{flex:1;min-width:0}
-#cover{width:76px;height:76px;border:1px solid var(--line);border-radius:17px;object-fit:cover;background:var(--panel-strong);box-shadow:0 8px 25px rgba(0,0,0,.25)}
-#ttl{min-width:0;font:600 18px "Space Grotesk",sans-serif;overflow-wrap:anywhere;word-break:break-word}
+#np{display:flex;flex-direction:column;gap:16px;width:100%;min-width:0;padding:20px;border:1px solid rgba(194,171,255,.2);border-radius:22px;background:linear-gradient(125deg,rgba(255,121,198,.09),rgba(124,155,255,.1),rgba(119,230,226,.06))}
+#np .top{display:flex;gap:15px;align-items:center;width:100%;min-width:0}
+#np .top>div{flex:1 1 0%;width:0;max-width:100%;min-width:0}
+#cover{flex:0 0 76px;width:76px;height:76px;border:1px solid var(--line);border-radius:17px;object-fit:cover;background:var(--panel-strong);box-shadow:0 8px 25px rgba(0,0,0,.25)}
+#ttl{display:block;width:100%;max-width:100%;min-width:0;font:600 18px "Space Grotesk",sans-serif;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+#art{max-width:100%;overflow-wrap:anywhere;word-break:break-word}
 #bar{width:100%;accent-color:#d9a3ff}
 input[type=range]{cursor:pointer}
 #stage{width:100%;min-width:0;aspect-ratio:16/9;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(170,140,255,.2),transparent 35%),rgba(8,8,25,.7);position:relative}
