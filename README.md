@@ -2,6 +2,8 @@
 
 Play Together is a small web app for syncing music or YouTube playback between two people in the same room. One user creates or joins a room and shares the link. The app keeps room state synchronized so both sides stay in step while listening.
 
+### Live Link - [Play Together](https://playtogetherr.vercel.app)
+
 ## Features
 
 - Shared room-based listening experience
@@ -29,8 +31,7 @@ Play Together is a small web app for syncing music or YouTube playback between t
 - Redis REST API for room state and chat (Upstash-compatible)
 - Audius and Jamendo for audio search and streaming
 - YouTube IFrame Player API for video playback
-- No build step required for the frontend
-
+- 
 ## How it works
 
 1. A user opens the app, picks a room name, and joins.
@@ -47,8 +48,6 @@ Configure these in `.env.local` for local development and in your hosting provid
 - `UPSTASH_REDIS_REST_TOKEN` – Redis REST API token; `REST_API_TOKEN` and `REST_TOKEN` are also accepted
 - `AUDIUS_BEARER_TOKEN` – optional but recommended for Audius requests
 - `JAMENDO_CLIENT_ID` – required to enable Jamendo search and playback
-
-Keep `.env.local` and all tokens private; do not commit them. `.env.local` is excluded by `.gitignore`.
 
 ## Run locally
 
@@ -90,7 +89,3 @@ Accepts playback updates and chat messages/reactions. Chat messages can also be 
 - Playback sync is lightweight and updates periodically, so clients stay roughly synchronized.
 - Chat is shared with everyone in the same room; the API only allows a sender to edit or delete their own text messages.
 - Search results and playback availability depend on the Audius and Jamendo services.
-
-## License
-
-This project does not currently include a license file. If you plan to distribute or publish it, add a license that matches your intended usage.
