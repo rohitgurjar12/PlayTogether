@@ -1,4 +1,4 @@
-const au = require('./_jamendo'), jm = require('./_jamendo');
+const au = require('./_audius'), jm = require('./_jamendo');
 const ok = r => (r.status === 'fulfilled' ? r.value : []);
 const why = (n, r) => (r.status === 'rejected' ? n + ': ' + (r.reason && r.reason.message) : '');
 module.exports = async (req, res) => {
@@ -17,4 +17,3 @@ module.exports = async (req, res) => {
     return res.status(502).json({ error: [why('Audius', a), why('Jamendo', j)].join(' | ') });
   res.status(200).json({ tracks });
 };
-

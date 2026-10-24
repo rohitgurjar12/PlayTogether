@@ -1,4 +1,4 @@
-const au = require('./_jamendo'), jm = require('./_jamendo');
+const au = require('./_audius'), jm = require('./_jamendo');
 module.exports = async (req, res) => {
   const m = /^(?:(au|jm):)?(\w{1,24})$/.exec(String(req.query.id || ''));
   if (!m) return res.status(400).json({ error: 'bad id' });

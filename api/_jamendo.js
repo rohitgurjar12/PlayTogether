@@ -1,19 +1,17 @@
-// Helper for the free Audius API (full-length, free-to-stream songs).
-// Optional but recommended: create a free key at https://api.audius.co/plans
-// and add it in Vercel as AUDIUS_BEARER_TOKEN.
-const KEY = process.env.AUDIUS_BEARER_TOKEN;
-const HOSTS = ['https://api.audius.co/v1', 'https://discoveryprovider.audius.co/v1'];
-exports.get = async (path, params = {}) => {
-  let last = 'no response';
-  for (const base of HOSTS) {
-    try {
-      const u = new URL(base + path);
-      u.searchParams.set('app_name', 'ListenTogether');
-      for (const k in params) u.searchParams.set(k, params[k]);
-      const r = await fetch(u, { headers: KEY ? { Authorization: 'Bearer ' + KEY } : {} });
-      if (r.ok) return await r.json();
-      last = 'Audius ' + r.status + (r.status === 401 || r.status === 403 ? ' (add AUDIUS_BEARER_TOKEN)' : '');
-    } catch (e) { last = String(e.message || e); }
-  }
-  throw new Error(last);
+const CLIENT_ID = process.env.JAMENDO_CLIENT_ID;
+
+exports.get = async params => {
+  if (!CLIENT_ID) throw new Error('JAMENDO_CLIENT_ID is not configured');
+  const url = new URL('https://api.jamendo.com/v3.0/tracks/');
+  url.searchParams.set('client_id', CLIENT_ID);
+  url.searchParams.set('format', 'json');
+  url.searchParams.set('audioformat', 'mp32');
+  for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Jamendo ' + response.status);
+  const data = await response.json();
+  if (data.headers && data.headers.status !== 'success')
+    throw new Error(data.headers.error_message || 'Jamendo request failed');
+  return data.results || [];
 };
