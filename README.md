@@ -9,7 +9,7 @@ Play Together is a small web app for syncing music or YouTube playback between t
 - Shared room-based listening experience
 - Search and play free audio tracks from Audius and Jamendo
 - Synchronized YouTube playback
-- In-room chat, quick emoji reactions, and edit/delete controls for your own messages
+- In-room chat available while listening to music or watching video, with member count, replies, quick emoji reactions, and inline edit/delete controls for your own messages
 - Real-time room and playback sync backed by Redis
 - Invite link generation for quick sharing
 - Responsive, animated interface for desktop and mobile
@@ -26,7 +26,7 @@ Play Together is a small web app for syncing music or YouTube playback between t
 
 ## Tech stack
 
-- HTML/CSS/JavaScript frontend
+- Lightweight HTML/CSS/JavaScript frontend
 - Serverless API routes in the `api/` folder
 - Redis REST API for room state and chat (Upstash-compatible)
 - Audius and Jamendo for audio search and streaming
@@ -81,11 +81,14 @@ Converts a track ID into a playable audio URL.
 Returns participant count, synchronized playback state, and recent room chat.
 
 ### `POST /api/room`
-Accepts playback updates and chat messages/reactions. Chat messages can also be edited or deleted by their original sender.
+Accepts playback updates, chat messages/reactions, and participant departures. Chat messages can include a `replyToId` referencing a recent room message, and can also be edited or deleted by their original sender. When the last participant leaves, the room's chat, playback state, and presence data are deleted.
 
 ## Notes
 
 - Room names are normalized to a simple lowercase slug to keep URLs predictable.
 - Playback sync is lightweight and updates periodically, so clients stay roughly synchronized.
 - Chat is shared with everyone in the same room; the API only allows a sender to edit or delete their own text messages.
+- The room chat works in both Audio and Video modes. A reply includes a short, server-validated quote of the original message.
+- Closing a room tab removes that participant; when the room becomes empty, its saved chat and playback state are cleared. Stale participants are pruned and empty-room data is cleared the next time someone joins.
 - Search results and playback availability depend on the Audius and Jamendo services.
+- The frontend stays as plain HTML/CSS/JavaScript because this app is small and static UI code is not the reported bottleneck. React or Tailwind could help with a larger component system or a consistent design workflow, but adopting them alone would not make the app faster and would add build/runtime dependencies.
