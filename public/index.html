@@ -136,12 +136,12 @@ input[type=range]{cursor:pointer}
 :root[data-theme=dark]{color-scheme:dark;--bg:#18221c;--panel:#202c24;--panel-strong:#2b3c30;--fg:#f3f2eb;--mut:#b1b9b0;--line:#3c4a40;--green:#DCE8D9;--sage:#34483a;--shadow:0 18px 50px rgba(0,0,0,.24)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{position:relative;isolation:isolate;background:var(--bg) url("../assets/bg_cream.png") center top/cover no-repeat fixed;color:var(--fg);font:15px/1.65 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;transition:background-color .2s,color .2s}
-:root[data-theme=dark] body{background:var(--bg) url("../assets/bg_forest.png") center top/cover no-repeat fixed}
+body{position:relative;isolation:isolate;background:var(--bg) url("assets/bg_cream.png") center top/cover no-repeat fixed;color:var(--fg);font:15px/1.65 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;transition:background-color .2s,color .2s}
+:root[data-theme=dark] body{background:var(--bg) url("assets/bg_forest.png") center top/cover no-repeat fixed}
 body:before{display:none!important}
 body:after{position:absolute;z-index:0;right:0;bottom:0;left:0;display:block;content:"";pointer-events:none}
-body:after{height:clamp(320px,32vw,420px);background:url("../assets/card_light.png") center bottom/min(1380px,100%) auto no-repeat;opacity:.72;mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 88%,transparent 100%)}
-:root[data-theme=dark] body:after{background-image:url("../assets/card_dark.png");opacity:.48}
+body:after{height:clamp(320px,32vw,420px);background:url("assets/card_light.png") center bottom/min(1380px,100%) auto no-repeat;opacity:.72;mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 88%,transparent 100%)}
+:root[data-theme=dark] body:after{background-image:url("assets/card_dark.png");opacity:.48}
 main{position:relative;z-index:2;width:min(100% - 48px,1160px);padding:24px 0 64px}
 @media(max-width:760px){body:after{height:320px;background-size:120% auto}}
 @media(max-width:425px){body:after{height:280px;background-size:130% auto}}
@@ -191,14 +191,14 @@ button.p:hover{filter:brightness(1.1);background:var(--green)}
 .hero-actions button{padding:11px 18px}
 .hero-note{margin:15px 0 0;color:var(--mut);font-size:12px}
 .orbital-art{min-height:310px;overflow:visible;border:0;border-radius:0;background:transparent;isolation:isolate}
-.orbital-art:before{z-index:2;display:block;top:-54px;right:-42px;left:auto;width:210px;height:154px;border:0;border-radius:0;background:url("../assets/leaves.png") center/contain no-repeat;animation:none;filter:drop-shadow(0 12px 18px rgba(37,43,38,.16));transform:rotate(8deg);pointer-events:none}
+.orbital-art:before{z-index:2;display:block;top:-54px;right:-42px;left:auto;width:210px;height:154px;border:0;border-radius:0;background:url("assets/leaves.png") center/contain no-repeat;animation:none;filter:drop-shadow(0 12px 18px rgba(37,43,38,.16));transform:rotate(8deg);pointer-events:none}
 :root[data-theme=dark] .orbital-art:before{display:none}
 .orbital-art:after{display:none}
-.room-preview{position:relative;z-index:1;width:min(100% - 36px,420px);padding:14px;border:1px solid rgba(37,43,38,.12);border-radius:18px;background:var(--panel) url("../assets/card_light.png") center/100% 100% no-repeat;box-shadow:0 18px 40px rgba(37,43,38,.12);transform:rotate(-2deg)}
-:root[data-theme=dark] .room-preview{background-image:url("../assets/card_dark.png")}
+.room-preview{position:relative;z-index:1;width:min(100% - 36px,420px);padding:14px;border:1px solid rgba(37,43,38,.12);border-radius:18px;background:var(--panel) url("assets/card_light.png") center/100% 100% no-repeat;box-shadow:0 18px 40px rgba(37,43,38,.12);transform:rotate(-2deg)}
+:root[data-theme=dark] .room-preview{background-image:url("assets/card_dark.png")}
 .room-preview:before,.room-preview:after{position:absolute;z-index:2;bottom:-28px;width:88px;height:66px;background-position:center;background-size:contain;background-repeat:no-repeat;content:"";pointer-events:none}
-.room-preview:before{right:-38px;background-image:url("../assets/books.png")}
-.room-preview:after{left:-36px;background-image:url("../assets/coffee.png")}
+.room-preview:before{right:-38px;background-image:url("assets/books.png")}
+.room-preview:after{left:-36px;background-image:url("assets/coffee.png")}
 .preview-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--mut);font-size:11px}
 .preview-live{display:flex;align-items:center;gap:6px;color:var(--green);font-weight:600}
 .preview-live:before{width:7px;height:7px;border-radius:50%;background:#638d6b;content:""}
@@ -285,7 +285,7 @@ input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{border
 .profile-details div{display:grid;gap:2px;padding:12px;border-radius:10px;background:var(--bg)}
 .profile-details dt{color:var(--mut);font-size:11px}
 .profile-details dd{margin:0;overflow-wrap:anywhere}
-.listen-scene{position:relative;display:grid;grid-template-columns:74px 150px 74px;align-items:center;justify-content:center;gap:16px;min-height:190px;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,rgba(18,61,45,.04),rgba(18,61,45,.12)),url("../assets/bg_mountains.png") center/cover}
+.listen-scene{position:relative;display:grid;grid-template-columns:74px 150px 74px;align-items:center;justify-content:center;gap:16px;min-height:190px;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,rgba(18,61,45,.04),rgba(18,61,45,.12)),url("assets/bg_mountains.png") center/cover}
 .listener{position:relative;z-index:1;width:72px;height:72px;overflow:hidden;border:3px solid var(--panel);border-radius:50%;box-shadow:0 4px 14px rgba(37,43,38,.12)}
 .listener img{display:block;width:100%;height:100%;object-fit:cover}
 .album-cover{position:relative;z-index:1;width:150px;height:150px;overflow:hidden;border-radius:13px;box-shadow:0 8px 18px rgba(25,48,34,.2)}
@@ -396,7 +396,7 @@ input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{border
     <nav class="header-nav"><a class="landing-only" href="#features">How it works</a><a class="landing-only" href="#join">Explore</a></nav>
     <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-label">Dark</span></button>
     <a id="signInLink" class="auth-link landing-only" href="#login" aria-label="Sign in">Sign in</a>
-    <button id="accountToggle" class="account-toggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountDrawer"><img src="../assets/avatar_3.png" alt=""></button>
+    <button id="accountToggle" class="account-toggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountDrawer"><img src="assets/avatar_3.png" alt=""></button>
   </div>
 </header>
 <div id="accountDrawerBackdrop" class="account-drawer-backdrop hide"></div>
@@ -420,13 +420,13 @@ input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{border
     <div class="room-preview">
       <div class="preview-top"><span>Room · sunday-evening</span><span class="preview-live">2 online</span></div>
       <div class="listen-scene" aria-hidden="true">
-        <div class="listener listener-one"><img src="../assets/avatar_1.png" alt=""></div>
-        <div class="album-cover"><img src="../assets/Sunset%20Vibes%20Lofi%20Mix.png" alt=""></div>
-        <div class="listener listener-two"><img src="../assets/avatar_2.png" alt=""></div>
+        <div class="listener listener-one"><img src="assets/avatar_1.png" alt=""></div>
+        <div class="album-cover"><img src="assets/Sunset%20Vibes%20Lofi%20Mix.png" alt=""></div>
+        <div class="listener listener-two"><img src="assets/avatar_2.png" alt=""></div>
       </div>
       <div class="scene-controls" aria-hidden="true">
         <div class="scene-progress"><span>1:24</span><i><b></b></i><span>3:36</span></div>
-        <div class="scene-buttons"><span class="icon-crop"><img src="../assets/shuffle.png" alt="Shuffle"></span><span class="icon-crop"><img src="../assets/previous.png" alt="Previous"></span><b><span class="icon-crop"><img src="../assets/pause.png" alt="Pause"></span></b><span class="icon-crop"><img src="../assets/skip.png" alt="Next"></span><span class="icon-crop"><img src="../assets/loop.png" alt="Loop"></span></div>
+        <div class="scene-buttons"><span class="icon-crop"><img src="assets/shuffle.png" alt="Shuffle"></span><span class="icon-crop"><img src="assets/previous.png" alt="Previous"></span><b><span class="icon-crop"><img src="assets/pause.png" alt="Pause"></span></b><span class="icon-crop"><img src="assets/skip.png" alt="Next"></span><span class="icon-crop"><img src="assets/loop.png" alt="Loop"></span></div>
       </div>
         <div class="preview-song"><span class="preview-song-copy"><b>Closer</b><span>Alice Benjamin · together, in sync</span></span></div>
     </div>
@@ -489,11 +489,11 @@ input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{border
       <input type="range" id="bar" min="0" max="0" step="1" value="0">
       <div class="player-time"><span class="mut" id="t">0:00 / 0:00</span><span id="syncLabel" class="mut">Listening together</span></div>
       <div class="player-controls" aria-label="Shared playback controls">
-        <button id="shuffle" class="player-icon" type="button" aria-label="Shuffle off" aria-pressed="false"><span class="icon-crop"><img src="../assets/shuffle.png" alt=""></span><span>Shuffle</span></button>
-        <button id="previous" class="player-icon" type="button" aria-label="Play previous track"><span class="icon-crop"><img src="../assets/previous.png" alt=""></span></button>
-        <button id="apb" class="player-play" type="button" aria-label="Pause"><span class="icon-crop"><img src="../assets/pause.png" alt=""></span><span class="player-label">Pause</span></button>
-        <button id="next" class="player-icon" type="button" aria-label="Play next track"><span class="icon-crop"><img src="../assets/skip.png" alt=""></span></button>
-        <button id="loop" class="player-icon" type="button" aria-label="Loop off" aria-pressed="false"><span class="icon-crop"><img src="../assets/loop.png" alt=""></span><span>Loop</span></button>
+        <button id="shuffle" class="player-icon" type="button" aria-label="Shuffle off" aria-pressed="false"><span class="icon-crop"><img src="assets/shuffle.png" alt=""></span><span>Shuffle</span></button>
+        <button id="previous" class="player-icon" type="button" aria-label="Play previous track"><span class="icon-crop"><img src="assets/previous.png" alt=""></span></button>
+        <button id="apb" class="player-play" type="button" aria-label="Pause"><span class="icon-crop"><img src="assets/pause.png" alt=""></span><span class="player-label">Pause</span></button>
+        <button id="next" class="player-icon" type="button" aria-label="Play next track"><span class="icon-crop"><img src="assets/skip.png" alt=""></span></button>
+        <button id="loop" class="player-icon" type="button" aria-label="Loop off" aria-pressed="false"><span class="icon-crop"><img src="assets/loop.png" alt=""></span><span>Loop</span></button>
       </div>
     </div>
     <p class="mut music-note">Free full-length songs via Audius and Jamendo. Artists are credited above.</p>
@@ -863,7 +863,7 @@ $('tabAu').onclick=()=>setMode('au');$('tabYt').onclick=()=>setMode('yt');
 /* ---------- Audio ---------- */
 function showNow(){
   $('np').classList.remove('hide');$('ttl').textContent=(meta&&meta.title)||'';$('art').textContent=(meta&&meta.artist)||'';
-  const i=$('cover');i.src=meta&&/^https:\/\//.test(meta.art||'')?meta.art:'../assets/Sunset%20Vibes%20Lofi%20Mix.png';i.classList.remove('hide');
+  const i=$('cover');i.src=meta&&/^https:\/\//.test(meta.art||'')?meta.art:'assets/Sunset%20Vibes%20Lofi%20Mix.png';i.classList.remove('hide');
 }
 async function playAudio(id,m,pos,play){
   type='au';vid=id;meta=m||{};au.loop=loopEnabled;showNow();updatePlaybackControls();say('Loading…');lock(6000);
@@ -876,7 +876,7 @@ async function playAudio(id,m,pos,play){
 function updatePlaybackControls(){
   const paused=type==='au'?au.paused:!playing;
   const playButton=$('apb');
-  playButton.querySelector('img').src=paused?'../assets/play.png':'../assets/pause.png';
+  playButton.querySelector('img').src=paused?'assets/play.png':'assets/pause.png';
   playButton.querySelector('.player-label').textContent=paused?'Play':'Pause';
   playButton.setAttribute('aria-label',paused?'Play':'Pause');
   $('loop').setAttribute('aria-pressed',String(loopEnabled));

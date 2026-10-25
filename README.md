@@ -21,6 +21,7 @@ Play Together is a small web app for syncing music or YouTube playback between t
 ## Project structure
 
 - `public/index.html` – frontend UI and client-side sync logic
+- `public/assets/` – static artwork and playback icons served by the frontend
 - `api/search.js` – searches tracks from free music APIs
 - `api/stream.js` – resolves a track ID to a streaming URL
 - `api/room.js` – stores playback state, room presence, chat, and reactions in Redis
