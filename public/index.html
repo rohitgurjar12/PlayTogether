@@ -89,7 +89,7 @@ input[type=range]{cursor:pointer}
 .chat-members{white-space:nowrap}
 .chat-messages{display:flex;flex-direction:column;gap:9px;min-height:90px;max-height:240px;overflow-y:auto;padding:4px 3px;scrollbar-color:rgba(170,140,255,.4) transparent}
 .chat-empty{align-self:center;margin:auto;color:var(--mut);font-size:13px;text-align:center}
-.chat-message{align-self:flex-start;max-width:min(86%,480px);padding:9px 12px;border:1px solid var(--line);border-radius:15px 15px 15px 4px;background:rgba(255,255,255,.055);animation:rise .25s both;overflow-wrap:anywhere}
+.chat-message{align-self:flex-start;max-width:min(86%,480px);padding:9px 12px;border:1px solid var(--line);border-radius:15px 15px 15px 4px;background:rgba(255,255,255,.055);overflow-wrap:anywhere}
 .chat-message.mine{align-self:flex-end;border-color:rgba(170,140,255,.25);border-radius:15px 15px 4px 15px;background:linear-gradient(120deg,rgba(255,121,198,.13),rgba(170,140,255,.16))}
 .chat-message-content{display:flex;flex-direction:column;align-items:stretch;gap:5px}
 .chat-quote{width:100%;padding:5px 8px;border-left:2px solid var(--pink);border-radius:4px;background:rgba(8,8,25,.3);text-align:left;cursor:pointer}
@@ -247,7 +247,9 @@ function renderChat(messages,snapshot=false){
     }
     if(message.kind!=='reaction'){
       const wasEdited=item.message&&item.message.edited;
-      item.querySelector('.chat-text').textContent=message.text+(message.edited?' (edited)':'');
+      const text=item.querySelector('.chat-text');
+      const displayText=message.text+(message.edited?' (edited)':'');
+      if(text.textContent!==displayText)text.textContent=displayText;
       const content=item.querySelector('.chat-message-content');
       if(!content.querySelector('.chat-actions')){
         const actions=document.createElement('div'),reply=document.createElement('button');
