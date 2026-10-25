@@ -117,14 +117,18 @@ input[type=range]{cursor:pointer}
 .chat-compose button.p{width:45px;padding:0;font-size:19px}
 .invite-row{justify-content:center;padding-top:5px}
 #copy{border-radius:999px}
+.toast{position:fixed;z-index:10;left:50%;bottom:24px;max-width:min(90vw,520px);padding:12px 20px;border:1px solid rgba(129,211,164,.85);border-radius:8px;background:#d8f0df;color:#17472b;box-shadow:0 10px 34px rgba(0,0,0,.3);font-weight:600;text-align:center;opacity:0;pointer-events:none;transform:translateX(-50%)}
+.toast.error{border-color:rgba(255,141,156,.85);background:#ffe0e4;color:#702431}
+.toast.show{animation:toast-notice 2s ease both}
 .hide{display:none!important}
 .col{display:flex;flex-direction:column;gap:18px}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
 @keyframes orbit{to{transform:rotate(332deg)}}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toast-notice{0%,100%{opacity:0;transform:translate(-50%,8px)}12%,82%{opacity:1;transform:translate(-50%,0)}}
 @media(max-width:700px){main{width:min(100% - 28px,620px);padding-top:18px}.site-header{margin-bottom:38px}.header-caption{font-size:11px}.hero{grid-template-columns:1fr;gap:0;margin-bottom:26px;overflow:hidden}.hero h1{font-size:clamp(43px,13vw,67px)}.orbital-art{position:absolute;right:-54px;top:-55px;min-height:190px;transform:scale(.62);opacity:.58;pointer-events:none}.hero-copy{max-width:410px}.join-card{padding:23px;border-radius:23px}.app-shell{gap:17px}}
 @media(max-width:420px){.header-caption{max-width:130px;text-align:right}.join-card h2{font-size:24px}.row{gap:8px}.row button{padding:11px 13px}.tabs button{min-width:88px;padding:8px 12px}#res{grid-template-columns:1fr}.search-row{padding:8px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.toast.show{animation:none;opacity:1;transform:translateX(-50%)}}
 @keyframes chat-highlight{0%,100%{box-shadow:none}25%,65%{box-shadow:0 0 0 3px rgba(119,230,226,.4)}}
 </style></head><body><main>
 <header class="site-header">
@@ -194,12 +198,20 @@ input[type=range]{cursor:pointer}
   <div class="row invite-row"><button id="copy">Copy invite link <span aria-hidden="true">↗</span></button></div>
   </div>
 </section>
+<div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 <audio id="au" preload="auto"></audio>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 const $=i=>document.getElementById(i),me=Math.random().toString(36).slice(2),RM=()=>location.hash.slice(1);
 const say=t=>{$('note').textContent=t;$('ph').textContent=t||'Nothing playing';if(t)$('ph').classList.remove('hide')};
+let toastTimer;
+function flashToast(message,error=false){
+  const toast=$('toast');
+  toast.textContent=message;toast.classList.toggle('error',error);
+  toast.classList.remove('show');void toast.offsetWidth;toast.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2000);
+}
 const fmt=s=>isFinite(s)?Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0'):'0:00';
 let mode='au',type=null,vid=null,meta=null,playing=false,mute=0,lastV=0,okNet=true,chatEditId=null,chatReply=null;
 let player=null,ytReady=false,pending=null,expect=0,expectTs=0;
@@ -461,7 +473,15 @@ function enter(n){
 }
 $('go').onclick=()=>enter($('room').value);
 $('room').onkeydown=e=>{if(e.key==='Enter')enter(e.target.value)};
-$('copy').onclick=()=>{navigator.clipboard.writeText(location.href);say('Link copied.')};
+$('copy').onclick=async()=>{
+  try{
+    await navigator.clipboard.writeText(location.href);
+    flashToast('Invite link copied!');
+  }catch(error){
+    console.error('Invite link could not be copied:',error);
+    flashToast('Could not copy the invite link.',true);
+  }
+};
 window.addEventListener('pagehide',()=>{
   const room=RM();
   if(!room)return;
