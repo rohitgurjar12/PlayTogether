@@ -131,6 +131,7 @@ module.exports = async (req, res) => {
       const m = b.meta || {};
       const s = {
         type: b.type === 'au' ? 'au' : 'yt', vid: str(b.vid, 24), playing: !!b.playing, pos: +b.pos || 0,
+        loop: !!b.loop, shuffle: !!b.shuffle,
         meta: { title: str(m.title, 120), artist: str(m.artist, 80), art: str(m.art, 300) },
         ts: now, from: str(b.id, 20), v: now,
       };
@@ -146,7 +147,7 @@ module.exports = async (req, res) => {
     ]);
     let st = out[1] ? JSON.parse(out[1]) : null;
     if (st) st = { type: st.type, vid: st.vid, meta: st.meta, from: st.from, v: st.v, playing: st.playing,
-      pos: st.pos + (st.playing ? (now - st.ts) / 1000 : 0) };
+      loop: st.loop, shuffle: st.shuffle, pos: st.pos + (st.playing ? (now - st.ts) / 1000 : 0) };
     res.status(200).json({ peers: out[0], state: st, chat: (out[2] || []).map(JSON.parse).reverse() });
   } catch (e) {
     res.status(500).json({ error: String(e.message || e) });

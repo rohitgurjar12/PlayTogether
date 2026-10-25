@@ -7,12 +7,15 @@ Play Together is a small web app for syncing music or YouTube playback between t
 ## Features
 
 - Shared room-based listening experience
+- Create a room with a chosen name or join with a room ID or invite link
 - Search and play free audio tracks from Audius and Jamendo
+- Synchronized play, pause, shuffle, and loop controls for shared audio
 - Synchronized YouTube playback
 - In-room chat available while listening to music or watching video, with member count, replies, quick emoji reactions, and inline edit/delete controls for your own messages
 - Real-time room and playback sync backed by Redis
 - Invite link generation for quick sharing
-- Responsive, animated interface for desktop and mobile
+- Responsive light/dark interface with custom room artwork
+- Account signup and login with unique usernames and email addresses, plus a persistent profile
 - Lightweight frontend with serverless API routes
 
 ## Project structure
@@ -21,6 +24,7 @@ Play Together is a small web app for syncing music or YouTube playback between t
 - `api/search.js` – searches tracks from free music APIs
 - `api/stream.js` – resolves a track ID to a streaming URL
 - `api/room.js` – stores playback state, room presence, chat, and reactions in Redis
+- `api/auth.js` – registers accounts, verifies password hashes, and manages profile sessions in Redis
 - `api/_audius.js` – Audius API helper
 - `api/_jamendo.js` – Jamendo API helper
 
@@ -28,7 +32,7 @@ Play Together is a small web app for syncing music or YouTube playback between t
 
 - Lightweight HTML/CSS/JavaScript frontend
 - Serverless API routes in the `api/` folder
-- Redis REST API for room state and chat (Upstash-compatible)
+- Redis REST API for room state, chat, accounts, and sessions (Upstash-compatible)
 - Audius and Jamendo for audio search and streaming
 - YouTube IFrame Player API for video playback
 - 
@@ -69,6 +73,8 @@ The app needs a serverless-functions runtime. VS Code Go Live, opening `public/i
 2. Add the required environment variables under **Project Settings → Environment Variables**. Add the Redis URL and token for room syncing, and `JAMENDO_CLIENT_ID` for Jamendo tracks.
 3. Deploy or redeploy after setting the variables.
 
+Accounts use the configured Redis store. Usernames and email addresses are unique (case-insensitive); passwords are stored as PBKDF2 hashes, and signed-in sessions use an HTTP-only cookie with a seven-day lifetime.
+
 ## API behavior
 
 ### `GET /api/search?q=...`
@@ -82,6 +88,12 @@ Returns participant count, synchronized playback state, and recent room chat.
 
 ### `POST /api/room`
 Accepts playback updates, chat messages/reactions, and participant departures. Chat messages can include a `replyToId` referencing a recent room message, and can also be edited or deleted by their original sender. When the last participant leaves, the room's chat, playback state, and presence data are deleted.
+
+### `GET /api/auth`
+Returns the signed-in user's public profile, or `null` when no valid session is present.
+
+### `POST /api/auth`
+Accepts `signup`, `login`, and `logout` actions. Signup reserves the username and email atomically so duplicate accounts cannot claim either identifier.
 
 ## Notes
 
