@@ -219,6 +219,7 @@ function renderChat(messages,snapshot=false){
   messages.forEach(message=>{
     if(!message||!message.id)return;
     let item=chatNodes.get(message.id);
+    const isNew=!item;
     if(!item){
       item=document.createElement('div');
       item.className='chat-message'+(message.from===me?' mine':'')+(message.kind==='reaction'?' reaction':'');
@@ -245,6 +246,7 @@ function renderChat(messages,snapshot=false){
       chatNodes.set(message.id,item);added=true;
     }
     if(message.kind!=='reaction'){
+      const wasEdited=item.message&&item.message.edited;
       item.querySelector('.chat-text').textContent=message.text+(message.edited?' (edited)':'');
       const content=item.querySelector('.chat-message-content');
       if(!content.querySelector('.chat-actions')){
@@ -262,8 +264,9 @@ function renderChat(messages,snapshot=false){
         content.append(actions);
       }
       item.message=message;
+      if(message.edited&&!wasEdited&&item.parentElement===box)box.append(item);
     }
-    box.append(item);
+    if(isNew)box.append(item);
   });
   $('chatEmpty').classList.toggle('hide',chatNodes.size>0);
   while(chatNodes.size>50){
