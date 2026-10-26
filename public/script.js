@@ -48,7 +48,7 @@ function setTheme(theme){
 }
 function showMainView(){
   closeAccountDrawer();$('auth').classList.add('hide');$('profile').classList.add('hide');
-  const inRoom=Boolean(RM());
+  const inRoom=Boolean(authUser&&RM());
   $('app').classList.toggle('hide',!inRoom);
   ['hero','join','features'].forEach(id=>$(id).classList.toggle('hide',inRoom));
   document.querySelectorAll('.landing-only').forEach(element=>element.classList.toggle('hide',inRoom));
@@ -103,18 +103,28 @@ async function handleAuthSubmit(event,action){
 }
 async function loadCurrentUser(){
   if(!/^https?:$/.test(location.protocol)){
-    showAuth(false);
+    setAuthUser(null);
+    if(RM())history.replaceState(null,'',location.pathname+location.search);
+    showMainView();
     return;
   }
   try{
     const result=await sendAuthRequest('profile',{});
     setAuthUser(result.user||null);
-    if(result.user)showMainView();
-    else showAuth(false);
+    if(result.user&&RM())enter(RM());
+    else{
+      const requestedRoom=RM();
+      if(!result.user&&requestedRoom)history.replaceState(null,'',location.pathname+location.search);
+      showMainView();
+      if(!result.user&&requestedRoom)flashToast('Sign in or create an account to enter a room.',true);
+    }
   }catch(error){
     console.error('Account status could not be loaded:',error);
     setAuthUser(null);
-    showAuth(false,'Could not verify your account. Please try again.');
+    if(RM())history.replaceState(null,'',location.pathname+location.search);
+    showMainView();
+    $('accountUser').textContent='Could not verify account status. Room access is unavailable.';
+    flashToast('Could not verify your account. Please try again.',true);
   }
 }
 try{setTheme(localStorage.getItem('play-together-theme')==='dark'?'dark':'light')}
@@ -150,12 +160,20 @@ $('brandHome').onclick=event=>{
   event.preventDefault();location.href=location.pathname+location.search;
 };
 function focusRoom(action){
+  if(!authUser){
+    showAuth(false,'Sign in or create an account to create or join a room.');
+    return;
+  }
   $('roomFeedback').textContent=action==='create'?'Choose a name, then create your shared room.':'Enter your friend’s room name or paste their invite link.';
   $('roomFeedback').classList.remove('error');
   $('join').scrollIntoView({behavior:'smooth',block:'center'});
   $('room').focus({preventScroll:true});
 }
 function submitRoom(action){
+  if(!authUser){
+    showAuth(false,'Sign in or create an account to create or join a room.');
+    return;
+  }
   let room=$('room').value.trim();
   if(/^https?:\/\//i.test(room)){
     try{room=new URL(room).hash.slice(1)}
@@ -495,6 +513,10 @@ async function poll(n){
   setTimeout(()=>poll(n),1000);
 }
 function enter(n){
+  if(!authUser){
+    showAuth(false,'Sign in or create an account to create or join a room.');
+    return;
+  }
   n=n.replace(/[^\w-]/g,'').toLowerCase();if(!n)return;
   closeAccountDrawer();location.hash=n;$('auth').classList.add('hide');$('profile').classList.add('hide');$('hero').classList.add('hide');$('join').classList.add('hide');$('features').classList.add('hide');document.querySelectorAll('.landing-only').forEach(element=>element.classList.add('hide'));document.querySelector('.header-nav').classList.add('hide');$('app').classList.remove('hide');poll(n);
 }
@@ -517,4 +539,3 @@ window.addEventListener('pagehide',()=>{
   }
 });
 setTimeout(()=>{if(typeof YT==='undefined'&&mode==='yt')say("Couldn't load the YouTube player. Check your connection or ad blocker.")},5000);
-if(RM())enter(RM());
