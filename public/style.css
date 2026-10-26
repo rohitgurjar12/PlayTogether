@@ -1636,6 +1636,21 @@ input[type=password]:focus {
   backdrop-filter:none
 }
 
+.app-panel.video-mode {
+  grid-template-columns:minmax(0,1fr)
+}
+
+.app-panel.video-mode #videoView,
+.app-panel.video-mode .chat-panel {
+  grid-column:1/-1;
+  grid-row:auto
+}
+
+.app-panel.video-mode #stage {
+  width:100%;
+  aspect-ratio:16/9
+}
+
 .app-panel>.tabs,
 .app-panel>#note,
 .app-panel>.invite-row {
