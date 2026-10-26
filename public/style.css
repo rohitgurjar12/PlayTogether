@@ -1636,17 +1636,18 @@ input[type=password]:focus {
   backdrop-filter:none
 }
 
-.app-panel.video-mode {
+.app-panel.room-wide {
   grid-template-columns:minmax(0,1fr)
 }
 
-.app-panel.video-mode #videoView,
-.app-panel.video-mode .chat-panel {
+.app-panel.room-wide #audioView,
+.app-panel.room-wide #videoView,
+.app-panel.room-wide .chat-panel {
   grid-column:1/-1;
   grid-row:auto
 }
 
-.app-panel.video-mode #stage {
+.app-panel.room-wide #stage {
   width:100%;
   aspect-ratio:16/9
 }

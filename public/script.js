@@ -355,7 +355,7 @@ function setMode(m){
   mode=m;
   $('tabAu').classList.toggle('on',m==='au');$('tabYt').classList.toggle('on',m==='yt');
   $('audioView').classList.toggle('hide',m!=='au');$('videoView').classList.toggle('hide',m!=='yt');
-  $('videoView').closest('.app-panel').classList.toggle('video-mode',m==='yt');
+  $('videoView').closest('.app-panel').classList.toggle('room-wide',m==='au'||m==='yt');
   lock();
   if(m==='au'){if(player&&player.pauseVideo){try{player.pauseVideo()}catch(e){}}}else au.pause();
 }
