@@ -2383,20 +2383,20 @@ input[type=password]:focus {
   }
 
   .listen-scene {
-    grid-template-columns:clamp(55px,17vw,68px) minmax(0,clamp(112px,38vw,146px)) clamp(55px,17vw,68px);
-    gap:clamp(8px,3vw,14px);
+    grid-template-columns:clamp(42px,15vw,64px) minmax(0,clamp(88px,30vw,114px)) clamp(42px,15vw,64px);
+    gap:clamp(6px,2.5vw,11px);
     min-height:clamp(145px,40vw,170px)
   }
 
   .listener {
-    width:clamp(54px,17vw,68px);
-    height:clamp(54px,17vw,68px);
+    width:clamp(42px,15vw,64px);
+    height:clamp(42px,15vw,64px);
     border-width:2px
   }
 
   .album-cover {
-    width:clamp(112px,38vw,146px);
-    height:clamp(112px,38vw,146px);
+    width:clamp(88px,30vw,114px);
+    height:clamp(88px,30vw,114px);
     border-radius:12px
   }
 
