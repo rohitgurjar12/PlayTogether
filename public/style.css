@@ -1029,25 +1029,7 @@ body:before {
 }
 
 body:after {
-  position:absolute;
-  z-index:0;
-  right:0;
-  bottom:0;
-  left:0;
-  display:block;
-  content:"";
-  pointer-events:none
-}
-
-body:after {
-  height:clamp(320px,32vw,420px);
-  background:url("assets/card_light.png") center bottom/min(1380px,100%) auto no-repeat;
-  opacity:.72;
-  mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 88%,transparent 100%)
-}
-
-:root[data-theme=dark] body:after {
-  display:none
+  display:none!important
 }
 
 main {
@@ -1055,20 +1037,6 @@ main {
   z-index:2;
   width:min(100% - 48px,1160px);
   padding:24px 0 64px
-}
-
-@media(max-width:760px) {
-  body:after {
-    height:320px;
-    background-size:120% auto
-  }
-}
-
-@media(max-width:425px) {
-  body:after {
-    height:280px;
-    background-size:130% auto
-  }
 }
 
 .site-header {
@@ -2295,10 +2263,6 @@ input[type=password]:focus {
     display:none;
     width:0;
     height:0
-  }
-
-  body:after {
-    display:none!important
   }
 
   .orbital-art:before {
